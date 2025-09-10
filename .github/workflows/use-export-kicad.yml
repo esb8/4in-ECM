@@ -1,0 +1,22 @@
+# .github/workflows/use-export-kicad.yml
+name: Export KiCad Images
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.kicad_sch'
+      - '**/*.kicad_pcb'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  call-test2:
+    uses: machtmu/shared-workflows/.github/workflows/export-kicad-images.yml@main
+    secrets:
+      APP_ID: ${{ secrets.APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
